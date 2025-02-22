@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eurorent Visuals</title>
     <link rel="icon" href="favicon.png" type="image/png">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- Font Awesome Icons -->
+    
+    <!-- Font Awesome for sound icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
         
@@ -25,15 +28,18 @@
         }
         .video-container {
             position: relative;
-            display: inline-block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background: black;
             max-width: 100%;
+            overflow: hidden;
         }
         .video-container video {
-            width: 100%;
+            max-width: 100%;
             height: auto;
             display: block;
-            cursor: pointer; /* Make video clickable */
+            cursor: pointer;
         }
         .sound-overlay {
             position: absolute;
@@ -53,6 +59,25 @@
             background: #f4f4f4;
             padding: 20px;
         }
+        .contact form {
+            max-width: 400px;
+            margin: auto;
+        }
+        .contact input, .contact textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .contact button {
+            padding: 10px 20px;
+            background: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
         .phone-number a {
             color: black !important;
             text-decoration: none;
@@ -65,11 +90,48 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            text-align: center;
+        }
+        .footer .social {
+            display: flex;
+            gap: 15px;
+        }
+        .footer .social a img {
+            width: 30px;
+            height: 30px;
+        }
+        .footer .contact-info {
+            text-align: right;
         }
         .footer .phone-number a {
             color: white !important;
         }
+        @media (max-width: 768px) {
+            .video-container {
+                max-width: 100%;
+                overflow: hidden;
+            }
+            .contact form {
+                max-width: 300px;
+            }
+            .contact input, .contact textarea {
+                padding: 8px;
+                font-size: 14px;
+            }
+            .contact button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer .contact-info {
+                text-align: center;
+            }
+        }
     </style>
+
     <script>
         function toggleSound() {
             let video = document.getElementById("video-player");
@@ -113,6 +175,13 @@
             Телефон: <a href="tel:+38975353858">+389 75 353 858</a>
         </p>
         <p>Адреса: Ул. Македонија, Скопје</p>
+
+        <form action="https://formspree.io/f/xqaenoyg" method="POST">
+            <input type="text" name="name" placeholder="Вашето Име" required>
+            <input type="email" name="email" placeholder="Вашиот Email" required>
+            <textarea name="message" placeholder="Вашата Порака" required></textarea>
+            <button type="submit">Испрати</button>
+        </form>
     </div>
 
     <div class="footer">
