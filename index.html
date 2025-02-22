@@ -5,78 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eurorent Visuals</title>
     <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
-
+        
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
-            overflow-x: hidden;
-            background: black;
         }
-
         .header {
-            background: rgba(0, 0, 0, 0.7);
+            background: #000;
             padding: 20px;
             text-align: center;
-            position: relative;
-            width: 100%;
-            z-index: 10;
         }
-
         .header img {
             max-width: 120px;
         }
-
         .video-container {
             position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: black;
         }
-
         .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* or contain */
-            display: block;
-            cursor: pointer;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
         }
-
-        .sound-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 30px;
-            color: white;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 50%;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
         .contact {
             background: #f4f4f4;
             padding: 20px;
-            margin: 0;
         }
-
         .contact form {
             max-width: 400px;
             margin: auto;
         }
-
         .contact input, .contact textarea {
             width: 100%;
             padding: 10px;
@@ -85,7 +54,6 @@
             border-radius: 5px;
             font-family: 'Montserrat', sans-serif;
         }
-
         .contact button {
             padding: 10px 20px;
             background: #333;
@@ -93,47 +61,50 @@
             border: none;
             cursor: pointer;
         }
-
-        .phone-number a {
-            color: black !important;
-            text-decoration: none;
+        .success-message {
+            display: none;
+            color: green;
+            font-size: 18px;
+            margin-top: 15px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
         }
-
         .footer {
             background: #000;
             color: #fff;
             padding: 20px;
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            text-align: center;
         }
-
         .footer .social {
             display: flex;
             gap: 15px;
         }
-
         .footer .social a img {
             width: 30px;
             height: 30px;
         }
-
         .footer .contact-info {
             text-align: right;
         }
-
-        .footer .phone-number a {
-            color: white !important;
+        .footer a {
+            color: #F9E802;
+            text-decoration: none;
         }
-
+        .phone-number {
+            font-weight: bold;
+        }
+        /* Make the phone number link appear black on mobile */
+        a[href^="tel"] {
+            color: black !important;
+            text-decoration: none;
+        }
         @media (max-width: 768px) {
             .video-container {
-                padding-bottom: 56.25%; /* Maintain aspect ratio */
-            }
-            .contact {
-                padding: 20px;
+                height: 50vh;
             }
             .contact form {
                 max-width: 300px;
@@ -155,27 +126,27 @@
             }
         }
     </style>
-
     <script>
-        function toggleSound() {
-            let video = document.getElementById("video-player");
-            let overlay = document.getElementById("sound-overlay");
-
-            if (video.muted) {
-                video.muted = false;
-                overlay.innerHTML = '<i class="fas fa-volume-up"></i>';
-            } else {
-                video.muted = true;
-                overlay.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            }
-
-            overlay.style.display = "block";
-            overlay.style.opacity = "1";
-
-            setTimeout(() => {
-                overlay.style.opacity = "0";
-                setTimeout(() => overlay.style.display = "none", 300);
-            }, 1000);
+        function handleSubmit(event) {
+            event.preventDefault();
+            let form = event.target;
+            let formData = new FormData(form);
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('success-message').style.display = 'block';
+                    form.reset();
+                } else {
+                    alert('Грешка при испраќање. Обидете се повторно!');
+                }
+            }).catch(error => {
+                alert('Грешка при испраќање. Обидете се повторно!');
+            });
         }
     </script>
 </head>
@@ -183,30 +154,30 @@
     <div class="header">
         <img src="logo.png" alt="Eurorent Visuals Logo">
     </div>
-
-    <div class="video-container" onclick="toggleSound()">
-        <video id="video-player" autoplay loop muted playsinline>
+    
+    <div class="video-container">
+        <video autoplay loop muted playsinline>
             <source src="video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div id="sound-overlay" class="sound-overlay"></div>
     </div>
-
+    
     <div class="contact" id="contact">
         <h2>Контакт</h2>
         <p class="phone-number">
             Телефон: <a href="tel:+38975353858">+389 75 353 858</a>
         </p>
         <p>Адреса: Ул. Македонија, Скопје</p>
-
-        <form action="https://formspree.io/f/xqaenoyg" method="POST">
+        
+        <form action="https://formspree.io/f/xqaenoyg" method="POST" onsubmit="handleSubmit(event)">
             <input type="text" name="name" placeholder="Вашето Име" required>
             <input type="email" name="email" placeholder="Вашиот Email" required>
             <textarea name="message" placeholder="Вашата Порака" required></textarea>
             <button type="submit">Испрати</button>
         </form>
+        <p id="success-message" class="success-message">Вашата порака беше успешно испратена!</p>
     </div>
-
+    
     <div class="footer">
         <div class="social">
             <a href="https://www.instagram.com/eurorentvisuals" target="_blank">
