@@ -17,19 +17,19 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Fix right-side scrolling issue */
             background: black;
         }
         .header {
             background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
+            padding: 10px 0; /* Reduced header size */
             text-align: center;
-            position: relative; /* No longer absolute */
+            position: relative;
             width: 100%;
             z-index: 10;
         }
         .header img {
-            max-width: 120px;
+            max-width: 100px; /* Slightly smaller logo */
         }
         .video-container {
             position: relative;
@@ -37,14 +37,14 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            height: 100vh; /* Fullscreen height */
+            height: 90vh; /* Adjusted to remove extra black space */
             overflow: hidden;
             background: black;
         }
         .video-container video {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Prevents cropping/stretching */
+            object-fit: cover; /* Prevents black bars and stretching */
             display: block;
             cursor: pointer;
         }
@@ -65,7 +65,7 @@
         .contact {
             background: #f4f4f4;
             padding: 20px;
-            margin: 0; /* Remove extra spacing */
+            margin: 0;
         }
         .contact form {
             max-width: 400px;
@@ -125,7 +125,7 @@
             .video-container video {
                 width: 100%;
                 height: auto;
-                object-fit: contain; /* Ensures proper scaling */
+                object-fit: contain;
             }
             .contact {
                 padding: 20px;
