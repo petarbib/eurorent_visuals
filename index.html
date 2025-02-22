@@ -95,8 +95,12 @@
             text-decoration: none;
         }
         .phone-number {
-            color: #F9E802;
             font-weight: bold;
+        }
+        /* Make the phone number link appear black on mobile */
+        a[href^="tel"] {
+            color: black !important;
+            text-decoration: none;
         }
         @media (max-width: 768px) {
             .video-container {
@@ -160,7 +164,9 @@
     
     <div class="contact" id="contact">
         <h2>Контакт</h2>
-        <p class="phone-number">Телефон: +389 75 353 858</p>
+        <p class="phone-number">
+            Телефон: <a href="tel:+38975353858">+389 75 353 858</a>
+        </p>
         <p>Адреса: Ул. Македонија, Скопје</p>
         
         <form action="https://formspree.io/f/xqaenoyg" method="POST" onsubmit="handleSubmit(event)">
@@ -182,7 +188,9 @@
             </a>
         </div>
         <div class="contact-info">
-            <p class="phone-number">Телефон: +389 75 353 858</p>
+            <p class="phone-number">
+                Телефон: <a href="tel:+38975353858">+389 75 353 858</a>
+            </p>
             <p>Адреса: Ул. Македонија, Скопје</p>
         </div>
     </div>
