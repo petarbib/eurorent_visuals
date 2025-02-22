@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eurorent Visuals</title>
     <link rel="icon" href="favicon.png" type="image/png">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- Font Awesome Icons -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
         
@@ -24,29 +25,29 @@
         }
         .video-container {
             position: relative;
-            display: inline-block; /* Ensures container fits video size */
+            display: inline-block;
             background: black;
             max-width: 100%;
         }
         .video-container video {
             width: 100%;
-            height: auto; /* Ensures proper aspect ratio */
+            height: auto;
             display: block;
+            cursor: pointer; /* Make video clickable */
         }
-        .sound-button {
+        .sound-overlay {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
             color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .sound-button:hover {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 50%;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
         .contact {
             background: #f4f4f4;
@@ -56,18 +57,40 @@
             color: black !important;
             text-decoration: none;
         }
+        .footer {
+            background: #000;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .footer .phone-number a {
+            color: white !important;
+        }
     </style>
     <script>
         function toggleSound() {
             let video = document.getElementById("video-player");
-            let button = document.getElementById("sound-button");
+            let overlay = document.getElementById("sound-overlay");
+
             if (video.muted) {
                 video.muted = false;
-                button.textContent = "Mute Sound";
+                overlay.innerHTML = '<i class="fas fa-volume-up"></i>'; // Sound on icon
             } else {
                 video.muted = true;
-                button.textContent = "Play with Sound";
+                overlay.innerHTML = '<i class="fas fa-volume-mute"></i>'; // Sound off icon
             }
+
+            overlay.style.display = "block";
+            overlay.style.opacity = "1";
+
+            // Hide after 2.5 seconds
+            setTimeout(() => {
+                overlay.style.opacity = "0";
+                setTimeout(() => overlay.style.display = "none", 500);
+            }, 2500);
         }
     </script>
 </head>
@@ -76,12 +99,12 @@
         <img src="logo.png" alt="Eurorent Visuals Logo">
     </div>
     
-    <div class="video-container">
+    <div class="video-container" onclick="toggleSound()">
         <video id="video-player" autoplay loop muted playsinline>
             <source src="video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <button id="sound-button" class="sound-button" onclick="toggleSound()">Play with Sound</button>
+        <div id="sound-overlay" class="sound-overlay"></div>
     </div>
     
     <div class="contact" id="contact">
@@ -90,6 +113,23 @@
             Телефон: <a href="tel:+38975353858">+389 75 353 858</a>
         </p>
         <p>Адреса: Ул. Македонија, Скопје</p>
+    </div>
+
+    <div class="footer">
+        <div class="social">
+            <a href="https://www.instagram.com/eurorentvisuals" target="_blank">
+                <img src="instagram-icon.png" alt="Instagram">
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61573091501314" target="_blank">
+                <img src="facebook-icon.png" alt="Facebook">
+            </a>
+        </div>
+        <div class="contact-info">
+            <p class="phone-number">
+                Телефон: <a href="tel:+38975353858">+389 75 353 858</a>
+            </p>
+            <p>Адреса: Ул. Македонија, Скопје</p>
+        </div>
     </div>
 </body>
 </html>
