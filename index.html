@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eurorent Visuals</title>
     <link rel="icon" href="favicon.png" type="image/png">
-    
-    <!-- Font Awesome for sound icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
-        
+
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -20,34 +17,40 @@
             overflow-x: hidden;
             background: black;
         }
+
         .header {
             background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             text-align: center;
-            position: relative; /* No longer absolute */
+            position: relative;
             width: 100%;
             z-index: 10;
         }
+
         .header img {
             max-width: 120px;
         }
+
         .video-container {
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             width: 100%;
-            height: 100vh; /* Fullscreen height */
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
             overflow: hidden;
             background: black;
         }
+
         .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Prevents cropping/stretching */
+            object-fit: cover; /* or contain */
             display: block;
             cursor: pointer;
         }
+
         .sound-overlay {
             position: absolute;
             top: 50%;
@@ -62,15 +65,18 @@
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
+
         .contact {
             background: #f4f4f4;
             padding: 20px;
-            margin: 0; /* Remove extra spacing */
+            margin: 0;
         }
+
         .contact form {
             max-width: 400px;
             margin: auto;
         }
+
         .contact input, .contact textarea {
             width: 100%;
             padding: 10px;
@@ -79,6 +85,7 @@
             border-radius: 5px;
             font-family: 'Montserrat', sans-serif;
         }
+
         .contact button {
             padding: 10px 20px;
             background: #333;
@@ -86,10 +93,12 @@
             border: none;
             cursor: pointer;
         }
+
         .phone-number a {
             color: black !important;
             text-decoration: none;
         }
+
         .footer {
             background: #000;
             color: #fff;
@@ -100,32 +109,28 @@
             flex-wrap: wrap;
             text-align: center;
         }
+
         .footer .social {
             display: flex;
             gap: 15px;
         }
+
         .footer .social a img {
             width: 30px;
             height: 30px;
         }
+
         .footer .contact-info {
             text-align: right;
         }
+
         .footer .phone-number a {
             color: white !important;
         }
 
-        /* Mobile Fixes */
         @media (max-width: 768px) {
             .video-container {
-                height: auto;
-                width: 100%;
-                min-height: 50vh;
-            }
-            .video-container video {
-                width: 100%;
-                height: auto;
-                object-fit: contain; /* Ensures proper scaling */
+                padding-bottom: 56.25%; /* Maintain aspect ratio */
             }
             .contact {
                 padding: 20px;
@@ -158,16 +163,15 @@
 
             if (video.muted) {
                 video.muted = false;
-                overlay.innerHTML = '<i class="fas fa-volume-up"></i>'; // Sound on icon
+                overlay.innerHTML = '<i class="fas fa-volume-up"></i>';
             } else {
                 video.muted = true;
-                overlay.innerHTML = '<i class="fas fa-volume-mute"></i>'; // Sound off icon
+                overlay.innerHTML = '<i class="fas fa-volume-mute"></i>';
             }
 
             overlay.style.display = "block";
             overlay.style.opacity = "1";
 
-            // Hide after 1 second
             setTimeout(() => {
                 overlay.style.opacity = "0";
                 setTimeout(() => overlay.style.display = "none", 300);
@@ -179,7 +183,7 @@
     <div class="header">
         <img src="logo.png" alt="Eurorent Visuals Logo">
     </div>
-    
+
     <div class="video-container" onclick="toggleSound()">
         <video id="video-player" autoplay loop muted playsinline>
             <source src="video.mp4" type="video/mp4">
@@ -187,7 +191,7 @@
         </video>
         <div id="sound-overlay" class="sound-overlay"></div>
     </div>
-    
+
     <div class="contact" id="contact">
         <h2>Контакт</h2>
         <p class="phone-number">
