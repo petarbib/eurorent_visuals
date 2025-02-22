@@ -24,129 +24,50 @@
         }
         .video-container {
             position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block; /* Ensures container fits video size */
             background: black;
+            max-width: 100%;
         }
         .video-container video {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
+            width: 100%;
+            height: auto; /* Ensures proper aspect ratio */
+            display: block;
+        }
+        .sound-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .sound-button:hover {
+            background: rgba(0, 0, 0, 0.9);
         }
         .contact {
             background: #f4f4f4;
             padding: 20px;
         }
-        .contact form {
-            max-width: 400px;
-            margin: auto;
-        }
-        .contact input, .contact textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .contact button {
-            padding: 10px 20px;
-            background: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .success-message {
-            display: none;
-            color: green;
-            font-size: 18px;
-            margin-top: 15px;
-            font-weight: 600;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .footer {
-            background: #000;
-            color: #fff;
-            padding: 20px;
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .footer .social {
-            display: flex;
-            gap: 15px;
-        }
-        .footer .social a img {
-            width: 30px;
-            height: 30px;
-        }
-        .footer .contact-info {
-            text-align: right;
-        }
-        .footer a {
-            color: #F9E802;
-            text-decoration: none;
-        }
-        .phone-number {
-            font-weight: bold;
-        }
-        /* Make the phone number link appear black on mobile */
-        a[href^="tel"] {
+        .phone-number a {
             color: black !important;
             text-decoration: none;
         }
-        @media (max-width: 768px) {
-            .video-container {
-                height: 50vh;
-            }
-            .contact form {
-                max-width: 300px;
-            }
-            .contact input, .contact textarea {
-                padding: 8px;
-                font-size: 14px;
-            }
-            .contact button {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-            .footer {
-                flex-direction: column;
-                text-align: center;
-            }
-            .footer .contact-info {
-                text-align: center;
-            }
-        }
     </style>
     <script>
-        function handleSubmit(event) {
-            event.preventDefault();
-            let form = event.target;
-            let formData = new FormData(form);
-            fetch(form.action, {
-                method: form.method,
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    document.getElementById('success-message').style.display = 'block';
-                    form.reset();
-                } else {
-                    alert('Грешка при испраќање. Обидете се повторно!');
-                }
-            }).catch(error => {
-                alert('Грешка при испраќање. Обидете се повторно!');
-            });
+        function toggleSound() {
+            let video = document.getElementById("video-player");
+            let button = document.getElementById("sound-button");
+            if (video.muted) {
+                video.muted = false;
+                button.textContent = "Mute Sound";
+            } else {
+                video.muted = true;
+                button.textContent = "Play with Sound";
+            }
         }
     </script>
 </head>
@@ -156,10 +77,11 @@
     </div>
     
     <div class="video-container">
-        <video autoplay loop muted playsinline>
+        <video id="video-player" autoplay loop muted playsinline>
             <source src="video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <button id="sound-button" class="sound-button" onclick="toggleSound()">Play with Sound</button>
     </div>
     
     <div class="contact" id="contact">
@@ -168,31 +90,6 @@
             Телефон: <a href="tel:+38975353858">+389 75 353 858</a>
         </p>
         <p>Адреса: Ул. Македонија, Скопје</p>
-        
-        <form action="https://formspree.io/f/xqaenoyg" method="POST" onsubmit="handleSubmit(event)">
-            <input type="text" name="name" placeholder="Вашето Име" required>
-            <input type="email" name="email" placeholder="Вашиот Email" required>
-            <textarea name="message" placeholder="Вашата Порака" required></textarea>
-            <button type="submit">Испрати</button>
-        </form>
-        <p id="success-message" class="success-message">Вашата порака беше успешно испратена!</p>
-    </div>
-    
-    <div class="footer">
-        <div class="social">
-            <a href="https://www.instagram.com/eurorentvisuals" target="_blank">
-                <img src="instagram-icon.png" alt="Instagram">
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=61573091501314" target="_blank">
-                <img src="facebook-icon.png" alt="Facebook">
-            </a>
-        </div>
-        <div class="contact-info">
-            <p class="phone-number">
-                Телефон: <a href="tel:+38975353858">+389 75 353 858</a>
-            </p>
-            <p>Адреса: Ул. Македонија, Скопје</p>
-        </div>
     </div>
 </body>
 </html>
